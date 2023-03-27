@@ -24,6 +24,7 @@ export class Parser {
 	}
 
 	public parseEquat(equat: string): any{
+		equat = equat.split(' ').join('')
 		if(this.checkBrackets(equat)){
 			equat = this.toNull(equat)
 			this.tree = this.getTree(equat);
@@ -42,7 +43,6 @@ export class Parser {
 
 
 	private toNull(equat: string): string{
-		equat = equat.replaceAll(' ', '') + ' ';
 		
 		const equalInd = equat.search('=');
 		if (equat[equalInd + 1] === '0'){

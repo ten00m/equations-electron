@@ -1,0 +1,13 @@
+* {
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+#latexInp{
+    margin: 10px 0    
+}
+
+.root {
+    margin: 10px 0;
+}

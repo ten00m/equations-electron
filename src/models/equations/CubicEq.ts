@@ -1,4 +1,5 @@
 import {RationalTheoremEq} from './methods/RationalTheoremEq'
+import { fCardano } from './methods/fCardano';
 
 export class CubicEq{
 	coeffs: Array<number>
@@ -16,7 +17,9 @@ export class CubicEq{
 		if(eq.solutions.length === 3){
 			return eq.solutions
 		}
-		console.log(eq.solutions)
-		return []
+		else {
+			let fCard = new fCardano(this.coeffs)
+			return fCard.solutions
+		}
 	}
 }
