@@ -23,21 +23,32 @@ solveBtn.addEventListener('click', (e) => {
         .then(r => r.text())
         .then(r => {
             solutionTex = JSON.parse(r)
-            solutionTex.map((root, ind) => {
-                const parsedRoot = document.createElement('div');
-                parsedRoot.className = 'root'
+            latexOut.innerHTML = ''
+            console.log(solutionTex)
+            if(solutionTex.length === 0){
+                const parsedRoots = document.createElement('div');
+                parsedRoots.className = 'root';
+                latexOut.appendChild(parsedRoots)
 
-                latexOut.appendChild(parsedRoot);
+                katex.render(String.raw`x \in \varnothing`, parsedRoots)
+            } else {
+                solutionTex.map((root, ind) => {
+                    const parsedRoot = document.createElement('div');
+                    parsedRoot.className = 'root'
+    
+                    latexOut.appendChild(parsedRoot);
+    
+                    katex.render(`x_${ind+1} = ${root}`, parsedRoot)
+                })
+            }
 
-                katex.render(`x_${ind+1} = ${root}`, parsedRoot)
-            })
         })
 
 })
 
 equatInp.addEventListener('input', (event) => {
     equatStr = event.target.value
-    latexOut.childNodes = []
+    latexOut.innerHTML = ''
 
 
     const res = fetch('/api/parse', {
@@ -50,6 +61,8 @@ equatInp.addEventListener('input', (event) => {
         .then(res => {
             if(res){
                 katex.render(res, latexInp)
+            } else{
+                latexInp.innerHTML =''
             }
         })
 

@@ -25,8 +25,9 @@ export class Parser {
 
 	public parseEquat(equat: string): any{
 		equat = equat.split(' ').join('')
+		
 		if(this.checkBrackets(equat)){
-			equat = this.toNull(equat)
+			equat = this.toNull(equat);
 			this.tree = this.getTree(equat);
 			return [equat, this.tree]
 		} else {
@@ -48,7 +49,7 @@ export class Parser {
 		if (equat[equalInd + 1] === '0'){
 			equat = `${equat.slice(0, equalInd)}`
 		} else {
-			equat = `${equat.slice(0, equalInd)}-(${equat.slice(equalInd + 1, -1)})`
+			equat = `${equat.slice(0, equalInd)}-(${equat.slice(equalInd + 1)})`
 		}
 		return equat;
 	}

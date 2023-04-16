@@ -58,11 +58,10 @@ expressApp.use(express.static(path.join(__dirname, "../frontend")))
 expressApp.use(express.json(), express.text())
 
 expressApp.post("/api/solve", async (req, res) => {
-    const equatStr = req.body.equat
-    console.log(equatStr);
+    const equatStr = req.body.equat    
     
     const equation = new Equation(equatStr);
-
+    
     const solution = equation.solve()
     if(solution){
         const solTex = solution.map(root => root.toTex())

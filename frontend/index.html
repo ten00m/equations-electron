@@ -11,15 +11,24 @@
 <body style="font-family: Arial, Helvetica, sans-serif;">
 
 </body>
-	<input type="text" id="equatInp">
-	<button id="solvebtn">
-		Решить
-	</button>
-	<div id="latexInp">
-
-	</div>
-	<div id="latexOut">
-
+	<div class="App">
+		<header>
+			EqCalc
+		</header>
+		<dvi class="wrapper">
+			<div class="inp">
+				<input type="text" id="equatInp" value="Enter your equation">
+				<button id="solvebtn">
+					=
+				</button>
+			</div>
+			<div id="latexInp">
+		
+			</div>
+			<div id="latexOut">
+		
+			</div>
+		</dvi>
 	</div>
 	<script src="script.js"></script>
 	<script src="katex.min.js"></script>
