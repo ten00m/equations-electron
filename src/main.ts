@@ -58,14 +58,22 @@ expressApp.use(express.static(path.join(__dirname, "../frontend")))
 expressApp.use(express.json(), express.text())
 
 expressApp.post("/api/solve", async (req, res) => {
-    const equatStr = req.body.equat    
+    const equatStr = req.body.equat  
+    console.log(equatStr)  
     
     const equation = new Equation(equatStr);
     
-    const solution = equation.solve()
+    const [solution, stebByStep] = equation.solve();
+
+
     if(solution){
-        const solTex = solution.map(root => root.toTex())
-        res.send(JSON.stringify(solTex))
+        const solTex = solution.map((root: any) => root.toTex());
+        const solObj = {
+            stepByStep: stebByStep,
+            solTex: solTex
+        }
+
+        res.send(JSON.stringify(solObj))
     } else{
         res.send(String.raw`x\in\emptyset`)
     }

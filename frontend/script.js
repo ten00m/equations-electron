@@ -3,14 +3,16 @@ let equatStr = ''
 const equatInp = document.getElementById('equatInp');
 const solveBtn = document.getElementById('solvebtn');
 const latexInp = document.getElementById('latexInp');
-const latexOut = document.getElementById('latexOut')
+const latexOut = document.getElementById('latexOut');
+const stepByStepOut = document.getElementById('stepByStep');
+
 
 solveBtn.addEventListener('click', (e) => {
     const body = {
         equat: equatStr
     }
 
-    let solutionTex = []
+    let solObj = []
     let response = fetch('/api/solve', {
         method: 'POST',
         headers: {
@@ -18,21 +20,54 @@ solveBtn.addEventListener('click', (e) => {
         },
         body: JSON.stringify(body)
     });
-
+    
     response
         .then(r => r.text())
         .then(r => {
-            solutionTex = JSON.parse(r)
+
             latexOut.innerHTML = ''
-            console.log(solutionTex)
+
+            solObj = JSON.parse(r);
+            const solutionTex = solObj.solTex;
+            const stepByStep = solObj.stepByStep
+
+            latexOut.innerHTML = ''
+            stepByStepOut.innerHTML = ''
+
+            for(let step of stepByStep){
+                const elem = document.createElement('div');
+                elem.className = 'stepByStep_element';
+                stepByStepOut.appendChild(elem);
+
+                if(step[0]){
+                    const stepText = document.createElement('p');
+                    stepText.innerHTML = step[0];
+
+                    elem.appendChild(stepText)
+                }
+                if(step[1]){
+                    const stepTex = document.createElement('div');
+                    stepTex.className = 'stepTex'
+
+                    katex.render(step[1], stepTex);
+
+
+                    elem.appendChild(stepTex)
+                }
+
+
+            }
+
             if(solutionTex.length === 0){
+
                 const parsedRoots = document.createElement('div');
                 parsedRoots.className = 'root';
                 latexOut.appendChild(parsedRoots)
 
-                katex.render(String.raw`x \in \varnothing`, parsedRoots)
+                katex.render(String.raw`\text{Корни не найдены}`, parsedRoots)
             } else {
                 solutionTex.map((root, ind) => {
+
                     const parsedRoot = document.createElement('div');
                     parsedRoot.className = 'root'
     

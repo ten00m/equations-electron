@@ -27,7 +27,10 @@ export class Simplifyer {
 		const rules = [
 			...simplify.rules, 
 			'-(n1 + n2) -> -n1 - n2',
-			'n1/n3 + n2/n3 -> (n1 + n2)/n3'
+			'n1/n3 + n2/n3 -> (n1 + n2)/n3',
+			'n*-1 -> -n',
+			'n*(-1) -> -n',
+			'-(-n) -> n'
 		]
 
 		let simplified = simplify(transformed, rules);
@@ -37,21 +40,6 @@ export class Simplifyer {
 		return simplified
 
 	}	
-	private static checkPeriodic(fract: any): boolean{
-		let m = fract.d;
-
-		while(m % 5 === 0){
-			m /= 5
-		}
-
-		while(m % 2 === 0){
-			m /= 2
-		}
-
-		return m !== 1
-
-	}
-
 
 	// принимет ноду 
 	private static checkIrrational(sqrt: any): boolean{

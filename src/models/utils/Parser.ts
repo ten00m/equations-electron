@@ -24,10 +24,8 @@ export class Parser {
 	}
 
 	public parseEquat(equat: string): any{
-		equat = equat.split(' ').join('')
-		
 		if(this.checkBrackets(equat)){
-			equat = this.toNull(equat);
+			equat = this.toNull(equat)
 			this.tree = this.getTree(equat);
 			return [equat, this.tree]
 		} else {
@@ -37,6 +35,7 @@ export class Parser {
 	}
 
 	private  getTree(equat: string): any{
+		console.log(equat)
 		const tree = parse(equat);
 		return tree
 	}
@@ -44,9 +43,10 @@ export class Parser {
 
 
 	private toNull(equat: string): string{
+		equat = equat.split(' ').join('')
 		
 		const equalInd = equat.search('=');
-		if (equat[equalInd + 1] === '0'){
+		if (equat[equalInd + 1] === '0' && !equat[equalInd + 2]){
 			equat = `${equat.slice(0, equalInd)}`
 		} else {
 			equat = `${equat.slice(0, equalInd)}-(${equat.slice(equalInd + 1)})`
